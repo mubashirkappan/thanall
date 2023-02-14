@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -14,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users_list');
+        $users=User::all();
+        Auth::attempt(['email'=>request('email'),'password'=>request('email')]);
+        return view('users_list',compact('users'));
     }
 
     /**
@@ -45,7 +48,7 @@ class UserController extends Controller
         'password'=>bcrypt(request('password')),
     ];
         User::create($input);
-        return("ok");
+        return view('home')->with('success');
     }
 
     /**

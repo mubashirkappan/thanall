@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 // Route::get('userlist',@user)
 Route::controller(UserController::class)->name('user.')->prefix('user')->group(function(){
-    Route::get('list','index')->name('list');
+    Route::post('list','index')->name('list');
     Route::get('create','create')->name('create');
     Route::post('save','store')->name('save');
     Route::get('list','index')->name('list');

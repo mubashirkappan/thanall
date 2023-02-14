@@ -7,7 +7,13 @@
         <center>
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 mt-5">Users List</h3>
         </center>
-    <table class="table table-striped mr-2" >
+        <div class="row">
+            <div class="col-10"></div>
+            <div class="col-1">
+                <a href="" class="btn btn-primary mb-3">add user</a>
+            </div>
+        </div>
+                <table class="table table-striped mr-2" >
         <thead>
           <tr class="" style="color:mediumpurple;background-color: black">
             <th scope="col">#</th>
@@ -22,39 +28,22 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@fat</td>
-            <td>@twitter</td>
-          </tr>
+            @foreach ($users as $user)
+            <tr>
+                <th>{{ $loop->iteration }}</th>
+                <th>{{ $user->f_name }}</th>
+                <th>{{ $user->l_name }}</th>
+                <th>{{ $user->gender }}</th>
+                <th>{{ $user->email }}</th>
+                <th>{{ $user->phone }}</th>
+                <th>{{ $user->job }}</th>
+                <th>{{ $user->adress }}</th>
+                <th>
+                    <a href="">edit</a>&nbsp;&nbsp;&nbsp;
+                    <a href="">delete</a>
+                </th>
+            </tr>
+            @endforeach
         </tbody>
     </table>
   <div class="col-1"></div>
