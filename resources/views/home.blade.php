@@ -4,7 +4,7 @@
 <div class="row" style="position: relative;top:230px">
     <div class="col-7">
         <center>
-            <h1 style="font-family:verdana">thanal palisha rahitha bank</h1>
+            {{--  <h1 style="font-family:verdana">thanal palisha rahitha bank</h1>  --}}
             <img src="/img/download.png " alt="" style="position: relative;top:20px;height: 250px;width: 250px;">
         </center>
     </div>

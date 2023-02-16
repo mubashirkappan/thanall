@@ -16,8 +16,13 @@ class UserController extends Controller
     public function index()
     {
         $users=User::all();
-        Auth::attempt(['email'=>request('email'),'password'=>request('email')]);
-        return view('users_list',compact('users'));
+        $auth=Auth::attempt(['email'=>request('email'),'password'=>request('password')]);
+        if($auth){
+            return view('users_list',compact('users'));
+        }
+        else{
+            return view('home');
+        }
     }
 
     /**
@@ -36,7 +41,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         $input=['f_name'=>request('firstName'),
         'l_name'=>request('lastName'),
@@ -47,8 +52,16 @@ class UserController extends Controller
         'job'=>request('job'),
         'password'=>bcrypt(request('password')),
     ];
-        User::create($input);
-        return view('home')->with('success');
+    User::create($input);
+    if(request('null')==1){
+        $users=User::all();
+        return view('users_list',compact('users'))->with('success');
+    }
+    else{
+        return view('home',)->with('success');
+
+
+    }
     }
 
     /**
