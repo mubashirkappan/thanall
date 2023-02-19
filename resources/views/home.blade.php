@@ -10,9 +10,14 @@
     </div>
     <div class="col-2" style="position: relative;top:60px">
         <center><h3>login please</h3></center>
+        @if(session()->has('message'))
+                <p style="color: red">
+                    {{ session()->get('message') }}
+                </p>
+        @endif
+        <div class="form-group">
         <form  method="POST" action="{{ route('user.list') }}">
             @csrf
-            <div class="form-group">
               <label for="exampleInputEmail1">Email address</label>
               <input autocomplete="off" type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>

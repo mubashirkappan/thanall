@@ -23,7 +23,7 @@ ul.drawer {
     top: 0;
     right: 0;
     width: 500px;
-    height: 45vh;
+    height: 49vh;
     background-color: #fff;
     transform: translateX(500px);
     transition: 0.3s;

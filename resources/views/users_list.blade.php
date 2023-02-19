@@ -13,8 +13,13 @@
                 <a href="#" class="btn btn-primary mb-3" id="add_user">add user</a>
             </div>
         </div>
-                <table class="table table-striped mr-2" >
+      <table class="table table-striped mr-2">
         <thead>
+            @if(session()->has('message'))
+                <h3 style="color: green">
+                    {{ session()->get('message') }}
+                </h3>
+        @endif
           <tr class="" style="color:mediumpurple;background-color: black">
             <th scope="col">#</th>
             <th scope="col">First Name</th>
@@ -39,8 +44,8 @@
                 <th>{{ $user->job }}</th>
                 <th>{{ $user->adress }}</th>
                 <th>
-                    <a href="#" id="edit">edit</a>&nbsp;&nbsp;&nbsp;
-                    <a href="#" id="delete">delete</a>
+                    <a edit-url="{{route('user.edit',$user->id)  }}" href="#" update-url="{{route('user.update',$user->id)  }}" id="edit">edit</a>&nbsp;&nbsp;&nbsp;
+                    <a href="{{ route('user.delete',$user->id) }}" id="delete">delete</a>
                 </th>
             </tr>
             @endforeach
@@ -56,7 +61,7 @@
                       <center>
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
                       </center>
-                      <form method="POST" action="{{ route('user.save')  }}">
+                      <form method="POST" action="{{ route('user.save')  }}" id="addUser">
                         @csrf
                         <div class="row">
                           <div class="col-md-6 mb-4">
@@ -136,15 +141,15 @@
                             </div>
                             <div class="col-3">
                                 <div class="mb-5 pt-1">
-                                    <input type="button" value="close" class="btn btn-danger btn-sm" id="close" style="position: relative;left:-90px;bottom:14px    ">
-                                  <input class="btn btn-primary btn-sm" type="submit" value="Submit" style="position: relative;left:-17px;bottom:1  4px" />
+                                    <input type="button" value="close" class="btn btn-danger btn-sm" id="close">
+                                    <input class="btn btn-primary btn-sm" type="submit" value="Submit" />
                                 </div>
                             </div>
                         </div>
                         <input type="hidden" name="null" value="1">
+                        <input type="hidden" name="id" name="userId" value="1">
                       </form>
                     </div>
-
     </ul>
   @endsection
 @section('script')
