@@ -44,8 +44,10 @@
                 <th>{{ $user->job }}</th>
                 <th>{{ $user->adress }}</th>
                 <th>
-                    <a edit-url="{{route('user.edit',$user->id)  }}" href="#" update-url="{{route('user.update',$user->id)  }}" id="edit">edit</a>&nbsp;&nbsp;&nbsp;
-                    <a href="{{ route('user.delete',$user->id) }}" id="delete">delete</a>
+                    <a href="{{ route('user.entry',$user->id)  }}" id="entryUser">Entry</a>&nbsp;&nbsp;&nbsp;
+                    <a href="{{ route('user.view',$user->id)  }}" id="viewUser">View</a>&nbsp;&nbsp;&nbsp;
+                    <a edit-url="{{route('user.edit',$user->id)  }}" href="#" update-url="{{route('user.update',$user->id)  }}" id="edit">Edit</a>&nbsp;&nbsp;&nbsp;
+                    <a href="{{ route('user.delete',$user->id) }}" id="delete">Delete</a>
                 </th>
             </tr>
             @endforeach

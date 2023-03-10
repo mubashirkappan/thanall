@@ -83,4 +83,12 @@ class UserController extends Controller
         return to_route('user.show')->with('message','user deleted successfully');
 
     }
+    public function view($id){
+        return view('user_view');
+    }
+    public function entry($id){
+        $userid=$id;
+        return view('user_data_entry',compact('userid'));
+    }
+
 }

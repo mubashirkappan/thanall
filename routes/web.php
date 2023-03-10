@@ -3,7 +3,7 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('', function () {
+Route::get('/', function () {
     return view('home');
 })->name('home');
 
@@ -15,4 +15,9 @@ Route::controller(UserController::class)->name('user.')->prefix('user')->group(f
     Route::get('edit/{id}','edit')->name('edit');
     Route::get('delete/{id}','delete')->name('delete');
     Route::get('update/{id}','update')->name('update');
+    Route::get('view/{id}','view')->name('view');
+    Route::get('entry/{id}','entry')->name('entry');
+});
+Route::controller(UserController::class)->name('entry.')->prefix('entry')->group(function(){
+    Route::post('save','store')->name('save');
 });
