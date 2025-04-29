@@ -28,7 +28,6 @@
             </div>
             <button type="submit" class="btn btn-primary ml-5 mt-3" style="position: relative;left: 60px;">Submit</button>
         </form>
-        <a href="{{ route('user.create') }}" class="" style="position: relative;left: 140px;top: 10px; color:aqua">don't have an account</a>
     </div>
 </div>
 @endsection

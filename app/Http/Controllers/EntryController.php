@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entry;
+use App\Models\PaymentMethod;
+use Faker\Provider\ar_EG\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EntryController extends Controller
 {
@@ -35,17 +38,41 @@ class EntryController extends Controller
      */
     public function store(Request $request)
     {
-        $id=request('id');
-        $input=[
-            'entry_date'=>request('entryDate'),
-            'debit'=>request('debit'),
-            'credit'=>request('credit'),
-            'description'=>request('description'),
-            'user_id'=>request('id')
+        $validator = Validator::make($request->all(), [
+            'entryDate' => 'required|date',
+            'debit' => 'nullable|numeric|exclude_if:credit,!=,null',
+            'credit' => 'nullable|numeric|exclude_if:debit,!=,null',
+            'description' => 'nullable|string',
+            'payment_method_id' => 'required',
+        ], [
+            'debit.exclude_if' => 'You cannot provide both debit and credit at the same time.',
+            'credit.exclude_if' => 'You cannot provide both debit and credit at the same time.',
+        ]);
+        $id = request('id');
+        $input = [
+            'entry_date' => request('entryDate'),
+            'debit' => request('debit'),
+            'credit' => request('credit'),
+            'description' => request('description'),
+            'user_id' => request('id'),
+            'payment_method_id' => request('payment_method_id'),
+
         ];
-        $result=Entry::create($input);
-        dd('ok');
-        return to_route('user.entry')->with('message');
+        $paymentMethod = PaymentMethod::findOrFail($input['payment_method_id']);
+        if ($request->debit) {
+            // Debit reduces the balance
+            $paymentMethod->balance -= $request->debit;
+        } elseif ($request->credit) {
+            // Credit increases the balance
+            $paymentMethod->balance += $request->credit;
+        }
+
+        // Save the updated payment method balance
+        $paymentMethod->save();
+        $input['balance'] = $paymentMethod->balance;
+        $result = Entry::create($input);
+
+        return to_route('user.view', ['id' => $id])->with('message');
     }
 
     /**

@@ -14,7 +14,6 @@ class TransactionsController extends Controller
      */
     public function add()
     {
-
     }
 
     /**

@@ -1,107 +1,58 @@
 @extends('welcome')
-@section('title','user-create')
+
+@section('title', 'Create User')
+
 @section('content')
-<section class="vh-100 gradient-custom">
-    <div class="container py-5 h-100">
-      <div class="row justify-content-center align-items-center h-100">
-        <div class="col-12 col-lg-9 col-xl-7">
-          <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-            <div class="card-body p-4 p-md-5">
-              <center>
-                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-              </center>
-              <form method="POST" action="{{ route('user.save')  }}">
-                @csrf
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <input type="text" id="firstName" name="firstName" class="form-control form-control-lg" />
-                      <label class="form-label" for="firstName">First Name</label>
-                    </div>
+<div class="container mt-5">
+    <h2>Create New User</h2>
 
-                  </div>
-                  <div class="col-md-6 mb-4">
-
-                    <div class="form-outline">
-                      <input type="text" id="lastName" name="lastName" class="form-control form-control-lg" />
-                      <label class="form-label" for="lastName">Last Name</label>
-                    </div>
-
-                  </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-4 pb-2">
-
-                        <select class="form-control" name="gender">
-                            <option>Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                          </select>
-
-                    </div>
-                    <div class="col-md-6 mb-4 pb-2">
-
-                      <div class="form-outline">
-                        <input type="text" id="address" name="address" class="form-control form-control-lg" />
-                        <label class="form-label" for="address">Address</label>
-                      </div>
-
-                    </div>
-                  </div>
-                <div class="row">
-                  <div class="col-md-6 mb-4 pb-2">
-
-                    <div class="form-outline">
-                      <input type="email" id="emailAddress" name="emailAddress" class="form-control form-control-lg" />
-                      <label class="form-label" for="emailAddress">Email</label>
-                    </div>
-
-                  </div>
-                  <div class="col-md-6 mb-4 pb-2">
-
-                    <div class="form-outline">
-                      <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control form-control-lg" />
-                      <label class="form-label" for="phoneNumber">Phone Number</label>
-                    </div>
-
-                  </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-4 pb-2">
-
-                      <div class="form-outline">
-                        <input type="text" id="job" name="job" class="form-control form-control-lg" />
-                        <label class="form-label" for="job">Job</label>
-                      </div>
-
-                    </div>
-                    <div class="col-md-6 mb-4 pb-2">
-
-                      <div class="form-outline">
-                        <input type="password" id="password" name="password" class="form-control form-control-lg" />
-                        <label class="form-label" for="password">Password</label>
-                      </div>
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-5">
-                    </div>
-                    <div class="col-3">
-                        <div class="mt-1 pt-1">
-                          <input class="btn btn-primary btn-lg" type="submit" value="Submit" style="position: relative;left:-17px;" />
-                        </div>
-                    </div>
-                </div>
-              </form>
+    <form action="{{ route('user.save') }}" method="POST">
+        @csrf
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" name="firstName" class="form-control" required />
             </div>
-          </div>
+            <div class="col-md-6 mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" name="lastName" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="gender" class="form-label">Gender</label>
+                <select name="gender" class="form-select" required>
+                    <option disabled selected>Choose...</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" name="address" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="emailAddress" class="form-label">Email</label>
+                <input type="email" name="emailAddress" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="phoneNumber" class="form-label">Phone</label>
+                <input type="tel" name="phoneNumber" class="form-control" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="job" class="form-label">Job</label>
+                <input type="text" name="job" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required />
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="d-flex justify-content-end gap-2">
+        <a href="javascript:history.back()" class="btn btn-secondary">Cancel</a>
 
-
-
+            <!-- <a href="{{ route('user.list') }}" class="btn btn-secondary">Cancel</a> -->
+            <button type="submit" class="btn btn-success">Create User</button>
+        </div>
+    </form>
+</div>
 @endsection
