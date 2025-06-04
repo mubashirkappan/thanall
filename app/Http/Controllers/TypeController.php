@@ -11,11 +11,12 @@ class TypeController extends Controller
     public function index()
     {
         if (auth()->user()->is_admin) {
-            $types = Type::all();
+            $types = Type::withSum('entries as total_debit', 'debit')
+           ->withSum('entries as total_credit', 'credit')->all();
         } else {
-            $types = Type::where('user_id', auth()->user()->id)->get();
+            $types = Type::withSum('entries as total_debit', 'debit')
+           ->withSum('entries as total_credit', 'credit')->where('user_id', auth()->user()->id)->get();
         }
-
         return view('type.index', compact('types'));
     }
 
@@ -45,8 +46,8 @@ class TypeController extends Controller
 
     public function update(Request $request, Type $type)
     {
-        $request->validate(['title' => 'required']);
-        $type->update($request->only('title'));
+        $request->validate(['title' => 'required','credit_or_debit'=>'required|in:credit,debit']);
+        $type->update($request->only('title','credit_or_debit'));
 
         return redirect()->route('type.index')->with('message', 'Type updated successfully.');
     }

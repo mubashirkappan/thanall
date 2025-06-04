@@ -27,6 +27,7 @@
                         @endauth
                         <th>Credit/Debit</th>
                         <th>Title</th>
+                        <th>Total</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -41,6 +42,7 @@
                         @endauth
                         <td>{{ ucfirst($type->credit_or_debit) }}</td>
                         <td>{{ $type->title }}</td>
+                        <td>{{ $type->total_debit??$type->total_credit }}</td>
 
                         <td>
                             <a href="{{ route('type.edit', $type->id) }}" class="btn btn-sm btn-warning">Edit</a>

@@ -21,6 +21,8 @@
 
             <form method="POST" action="{{ route('type.update', $type->id) }}">
                 @csrf
+                @auth
+                @if(auth()->user()->is_admin)
                 <div class="form-group mb-3">
                     <select name="user_id" class="form-select">
                         @foreach($users as $user)
@@ -28,6 +30,8 @@
                         @endforeach
                     </select>
                 </div>
+                @endif
+                @endauth
                 <div class="form-group mb-3">
                     <select name="credit_or_debit" class="form-select">
                         <option value="credit">Credit</option>
