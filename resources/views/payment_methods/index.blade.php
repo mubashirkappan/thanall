@@ -52,6 +52,10 @@
                         <td colspan="4">No payment methods found.</td>
                     </tr>
                     @endforelse
+                    <tr>
+                    <th colspan="2">Total Balance</th>
+                        <th>{{ $methods->sum('balance') }}</th>
+                    </tr>
                 </tbody>
             </table>
         </div>
