@@ -18,10 +18,15 @@ Route::controller(UserController::class)->name('user.')->prefix('user')->group(f
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/entry/{id}/edit', [EntryController::class, 'edit'])->name('entry.edit');
+    Route::delete('/entry/{id}', [EntryController::class, 'destroy'])->name('entry.delete');
+    Route::put('/entry/{id}', [EntryController::class, 'update'])->name('entry.update');
+
     Route::controller(UserController::class)->name('user.')->prefix('user')->group(function () {
         Route::get('dashboard', 'dashboard')->name('dashboard');
         Route::get('view/{id?}', 'view')->name('view');
         Route::get('entry/{id?}', 'entry')->name('entry');
+
     });
     Route::controller(EntryController::class)->name('entry.')->prefix('entry')->group(function () {
         Route::post('save', 'store')->name('save');
