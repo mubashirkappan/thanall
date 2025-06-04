@@ -22,4 +22,8 @@ class Entry extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }
