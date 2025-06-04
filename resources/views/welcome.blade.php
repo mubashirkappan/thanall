@@ -22,7 +22,29 @@
 
     <link rel="stylesheet" href="{{ url('/css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('img/favicon_large.png') }}">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <style>
+        .pagination {
+            justify-content: center;
+            /* Center the pagination */
+        }
+
+        .pagination .page-item {
+            margin: 0 5px;
+            /* Add some space between pagination items */
+        }
+
+        .pagination .page-link {
+            border-radius: 0.25rem;
+            /* Adjust border radius */
+        }
+        .select2-container {
+    width: 100% !important;
+}
         @yield('style')
     </style>
 </head>
@@ -47,7 +69,7 @@
                     </li>
                     @endif
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('type.index') }}">Types</a>
+                        <a class="nav-link" href="{{ route('type.index') }}">Category</a>
                     </li>
                     @php
                     $id = auth()->user()->is_admin ? null : auth()->user()->id;
@@ -98,6 +120,9 @@
 <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
+    <!-- jQuery (already included), then Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 @yield('script')
 
 </html>

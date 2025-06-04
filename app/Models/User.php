@@ -27,6 +27,9 @@ class User extends Authenticatable
         'gender',
         'email',
         'password',
+        'is_admin',
+        'email_verified_at',
+        'remember_token'
     ];
 
     /**

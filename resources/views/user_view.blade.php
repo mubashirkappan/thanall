@@ -34,12 +34,23 @@
                     @endauth
 
                     <div class="col-md-4 mb-3">
-                        <label for="payment_method_id" class="form-label">Select Payment Method</label>
+                        <label for="payment_method_id" class="form-label">Payment Method</label>
                         <select name="payment_method_id" id="payment_method_id" class="form-select">
                             <option value="">All Payment Methods</option>
                             @foreach($paymentMethods as $method)
                             <option value="{{ $method->id }}" {{ request('payment_method_id') == $method->id ? 'selected' : '' }}>
                                 {{ $method->title }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="category_id" class="form-label">Category</label>
+                        <select name="category_id" id="category_id" class="form-select">
+                            <option value="">All Categories</option>
+                            @foreach($category as $category)
+                            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->title }}
                             </option>
                             @endforeach
                         </select>
@@ -101,8 +112,11 @@
                         <th class="bg-danger">Debit</th>
                         <th class="bg-success">Credit</th>
                         <th>Balance</th>
+                        <th>Type</th>
                         <th>Payment Method</th>
                         <th>Description</th>
+                        <th>Actions</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -117,16 +131,56 @@
                         <td style="background-color: rgba(255, 0, 0, 0.2);">{{ $entry->debit }}</td>
                         <td style="background-color: rgba(0, 128, 0, 0.2);">{{ $entry->credit }}</td>
                         <td>{{ $entry->balance }}</td>
+                        <td>{{ $entry->type?->title ?? 'N/A' }}</td>
                         <td>{{ $entry->paymentMethod?->title ?? 'N/A' }}</td>
                         <td>{{ $entry->description }}</td>
+                        <td>
+                            <a href="{{ route('entry.edit', $entry->id) }}" class="btn btn-sm btn-warning">Edit</a>
+
+                            <form action="{{ route('entry.delete', $entry->id) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this entry?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+
                     </tr>
                     @empty
                     <tr>
                         <td colspan="7">No entries found.</td>
                     </tr>
                     @endforelse
+                    <tr>
+                        <th class="text-center">Total</th>
+                        <th class="bg-danger text-white">{{$totals['total_debit']}}</th>
+                        <th class="bg-success text-white">{{$totals['total_credit']}}</th>
+        
+                        @if ($entries instanceof \Illuminate\Pagination\LengthAwarePaginator || $entries instanceof \Illuminate\Pagination\Paginator)
+
+                        <td colspan="5">
+                            
+                        {{ $entries->links('vendor.pagination.bootstrap-4') }}
+                            <!-- {{ $entries->links() }} -->
+                            <!-- <select name="per_page" id="per_page" class="form-select">
+                            @php
+                                $perPageOptions = [10, 25, 50, 100];
+                                $selectedPerPage = request('per_page') ?? 10;
+                            @endphp
+                            @foreach ($perPageOptions as $option)
+                                <option value="{{ $option }}" {{ $selectedPerPage == $option ? 'selected' : '' }}>
+                                    {{ $option }}
+                                </option>
+                            @endforeach
+                        </select> -->
+                        </td>
+                        @endif
+                    </tr>
                 </tbody>
+
             </table>
+
+            <!-- <div class="mt-3">
+            </div> -->
         </div>
     </div>
 </div>
@@ -138,8 +192,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
-
-
     // Download PDF
     document.getElementById('downloadPdf').addEventListener('click', function() {
         console.log("Download PDF clicked");

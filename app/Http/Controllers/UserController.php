@@ -19,7 +19,7 @@ class UserController extends Controller
         if ($auth) {
             return view('dashboard')->with('message', 'login success');
         } else {
-            return to_route('home')->with('message', 'invalid credentils');
+            return to_route('home')->with('message', 'invalid credentials');
         }
     }
 
@@ -46,10 +46,11 @@ class UserController extends Controller
             'password' => bcrypt(request('password')),
         ];
         User::create($input);
-        if (request('null') == 1) {
-            return to_route('user.show')->with('message', 'user added successfully');
+        $auth = Auth::attempt(['email' => request('emailAddress'), 'password' => request('password')]);
+        if ($auth) {
+            return view('dashboard')->with('message', 'login success');
         } else {
-            return to_route('user.show')->with('message', 'user added successfully');
+            return to_route('home')->with('message', 'invalid credentials');
         }
     }
 
@@ -102,8 +103,10 @@ class UserController extends Controller
         $users = User::all();
         if (auth()->user()->is_admin) {
             $paymentMethods = PaymentMethod::all();
+            $category = Type::all();
         } else {
             $paymentMethods = PaymentMethod::where('user_id', auth()->user()->id)->get();
+            $category = Type::where('user_id', auth()->user()->id)->get();
         }
 
         $query = Entry::latest();
@@ -115,6 +118,9 @@ class UserController extends Controller
         // User filter
         if ($request->filled('user_id')) {
             $query->where('user_id', $request->user_id);
+        }
+        if ($request->filled('category_id')) {
+            $query->where('type_id', $request->category_id);
         }
 
         // Payment method filter
@@ -149,10 +155,16 @@ class UserController extends Controller
                 $query->whereYear('entry_date', Carbon::now()->year);
             }
         }
-
-        $entries = $query->get();
-
-        return view('user_view', compact('entries', 'id', 'users', 'paymentMethods'));
+        // Pagination
+        $perPage = $request->get('per_page', 10);
+        $entries = $query
+        ->get();
+        // ->paginate($perPage);
+        $totals = [
+            'total_debit' => $entries->sum('debit'),
+            'total_credit' => $entries->sum('credit'),
+        ];
+        return view('user_view', compact('entries', 'id', 'users', 'paymentMethods','category','totals'));
     }
 
     public function entry($id = null)

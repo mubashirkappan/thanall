@@ -62,6 +62,8 @@
                 <option value="{{ $method->id }}">{{ $method->title }}</option>
                 @endforeach
             </select>
+            <div class="text-danger error-message" id="paymentMethodError"></div>
+
             <br>
 
             <div id="debitField">
@@ -128,13 +130,19 @@
 
         const selectedOption = typeSelect.options[typeSelect.selectedIndex];
         const type = selectedOption.getAttribute('data-credit-or-debit');
+        const paymentMethodSelect = document.getElementById('payment_method_id');
+        paymentMethodSelect.classList.remove('error');
+        if (!paymentMethodSelect.value) {
+            document.getElementById('paymentMethodError').textContent = "Please select a payment method.";
+            paymentMethodSelect.classList.add('error');
+            isValid = false;
+        }
 
         if (!type) {
             document.getElementById('typeError').textContent = "Please select a type.";
             typeSelect.classList.add('error');
             isValid = false;
         }
-
         if (type === 'debit') {
             if (!debitInput.value || parseFloat(debitInput.value) <= 0) {
                 document.getElementById('debitError').textContent = "Enter a valid debit amount.";
@@ -181,8 +189,14 @@
 
     userSelect.addEventListener('change', filterTypes);
     document.addEventListener('DOMContentLoaded', filterTypes);
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#user_id').select2({ placeholder: "Select User" });
+        $('#type').select2({ placeholder: "Select Type" });
+        $('#payment_method_id').select2({ placeholder: "Select Payment Method" });
+    });
 </script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 @endsection

@@ -22,15 +22,6 @@
         @endauth
         <!-- Types Card -->
         <div class="col-md-3 mb-4">
-            <div class="card text-white bg-warning h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Payment method</h5>
-                    <p class="card-text">Manage payment method.</p>
-                    <a href="{{ route('payment.index') }}" class="btn btn-light">Payment Methods</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
             <div class="card text-white bg-success h-100">
                 <div class="card-body">
                     <h5 class="card-title">Category</h5>
@@ -52,7 +43,15 @@
                 </div>
             </div>
         </div>
-
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-warning h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Payment method</h5>
+                    <p class="card-text">Manage payment method.</p>
+                    <a href="{{ route('payment.index') }}" class="btn btn-light">Payment Methods</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
